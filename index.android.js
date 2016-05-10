@@ -2,6 +2,15 @@
  * Sample React Native App
  * https://github.com/facebook/react-native
  */
+var Contacts = require('react-native-contacts');
+
+Contacts.getAll((err, contacts) => {
+  if(err && err.type === 'permissionDenied'){
+    // x.x
+  } else {
+    console.log(contacts);
+  }
+});
 
 import React, { Component } from 'react';
 import {
