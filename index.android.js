@@ -116,7 +116,7 @@ class Agora extends Component {
 	
 	getContacts() {
 		// prefetch contact list
-		/*ContactsData.getAll((err, contacts) => {
+		ContactsData.getAll((err, contacts) => {
 			if(err && err.type === 'permissionDenied'){
 				this.setState({
 					error : {
@@ -124,15 +124,20 @@ class Agora extends Component {
 					}
 				});
 			} else {
+				console.log("*** contacts=", contacts);
+				
 				this.setState({
-					contactList : contacts
+					dataSource : this.state.dataSource.cloneWithRows(contacts),
+					loaded : true
 				});
 			}
-		});*/
+		});
+		/*
 		this.setState({
 			dataSource : this.state.dataSource.cloneWithRows(FAKE_DATA),
 			loaded : true
-		})
+		});
+		*/
 	}
 	
 	renderFailedView(error) {
@@ -144,11 +149,15 @@ class Agora extends Component {
 	}
 	
 	renderContact(contact) {
+		var fullName = contact.givenName + " " + contact.familyName;
+		var phoneNumber = contact.phoneNumbers[0] ? contact.phoneNumbers[0].number : "n/a";
+		var emailAddress = contact.emailAddresses[0] ? contact.emailAddresses[0].email : "n/a";
+		
 		return (
 			<View style={styles.listItem}>
-				<Text style={styles.name}>{contact.givenName} {contact.familyName}</Text>
-				<Text style={styles.phone}>{contact.phoneNumbers[0].number}</Text>
-				<Text style={styles.email}>{contact.emailAddresses[0].email}</Text>
+				<Text style={styles.name}>Name: {fullName}</Text>
+				<Text style={styles.phone}>Phone: {phoneNumber}</Text>
+				<Text style={styles.email}>Email: {emailAddress}</Text>
 			</View>
 		)
 	}
